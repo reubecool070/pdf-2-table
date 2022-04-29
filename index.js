@@ -1,40 +1,25 @@
-const { PythonShell } = require("python-shell");
-const path = require("path");
+const express = require("express");
+const { pdf2TableConverter } = require("./Controller/pdf.controller");
+const apiRoutes = require("./routes/api.routes");
+const fs = require("fs");
+const output = require("./Controller/output");
 
-const pythonCall = async (url) => {
-  const options = {
-    mode: "text",
-    pythonPath: "python3",
-    pythonOptions: ["-u"],
-    scriptPath: "./node_modules/pdf2table-json",
-    args: url,
-  };
+const app = express();
+app.use(express.json());
+const PORT = 8080;
 
-  try {
-    const response = await new Promise((resolve, reject) => {
-      PythonShell.run("gct.py", options, async function (err, results) {
-        if (err) {
-          reject(err);
-        }
-        console.log(results);
-        resolve(results);
-      });
-    });
+app.get("/", (req, res, next) => {
+  res.status(200).send("Hello Track OS testing!");
+});
+// app.use("/api", apiRoutes);
+app.post("/api/pdf", async (req, res, next) => {
+  await pdf2TableConverter(req.body.url);
+  const readFile = fs.readFileSync("./Controller/output", "utf-8");
+  const parseFile = JSON.parse(readFile);
+  fs.writeFileSync("./Controller/output", JSON.stringify({}));
+  res.status(200).json(parseFile);
+});
 
-    return response;
-  } catch (error) {
-    return error;
-  }
-};
-
-const pdf2TableConverter = async (url) => {
-  try {
-    console.log("running");
-    const tabletoJSON = await pythonCall(url);
-    return tabletoJSON;
-  } catch (error) {
-    return error;
-  }
-};
-
-module.exports = pdf2TableConverter;
+app.listen(PORT, () => {
+  console.log(`server listening at port ${PORT}`);
+});
