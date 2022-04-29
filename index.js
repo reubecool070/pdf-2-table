@@ -1,6 +1,5 @@
 const express = require("express");
 const { pdf2TableConverter } = require("./Controller/pdf.controller");
-const apiRoutes = require("./routes/api.routes");
 const fs = require("fs");
 const output = require("./Controller/output");
 
