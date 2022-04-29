@@ -1,0 +1,27 @@
+{
+  "name": "pdf2table-json",
+  "version": "1.0.0",
+  "description": "converts pdf to table json",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/reubecool070/pdf-2-table.git"
+  },
+  "keywords": [
+    "table",
+    "to",
+    "json"
+  ],
+  "author": "Reuben Thapa",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/reubecool070/pdf-2-table/issues"
+  },
+  "homepage": "https://github.com/reubecool070/pdf-2-table#readme",
+  "dependencies": {
+    "python-shell": "^3.0.1"
+  }
+}
