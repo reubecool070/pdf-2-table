@@ -22,7 +22,6 @@ tabula.convert_into(url, os.path.join(new_path, "output"),'json',pages="all", st
 # pd.read_csv
 output  = open(os.path.join(new_path, "output"))
 data = json.load(output)
-print(data)
 # convert all PDFs in a folder into json format
 # `pdfs` folder should exist in the current directory
 # tabula.convert_into_by_batch("pdfs", output_format="json", pages="all")
