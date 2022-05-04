@@ -6,7 +6,6 @@ const pdf2TableConverter = async (url) => {
 
     return tabletoJSON;
   } catch (error) {
-    console.log(error);
     return error;
   }
 };
@@ -26,7 +25,7 @@ const pythonCall = async (url) => {
         if (err) {
           reject(err);
         }
-        resolve(results);
+        resolve(JSON.parse(results, null, 4));
       });
     });
 
