@@ -16,7 +16,7 @@ const pythonCall = async (url) => {
     pythonPath: "python3",
     pythonOptions: ["-u"],
     // scriptPath: `${__dirname}`,
-    scriptPath: `./Controller`,
+    scriptPath: `${__dirname}`,
     args: url,
   };
   try {

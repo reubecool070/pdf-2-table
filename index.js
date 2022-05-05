@@ -13,7 +13,8 @@ app.get("/", (req, res, next) => {
 app.post("/api/pdf", async (req, res, next) => {
   const response = await pdf2TableConverter(req.body.url);
   // const readFile = fs.readFile("./Controller/output.json", "utf-8");
-  const parseFile = JSON.parse(response);
+  console.log(response);
+  const parseFile = response ? JSON.parse(response): [];
   // fs.writeFileSync("./Controller/output.json", JSON.stringify([]));
   res.status(200).json(parseFile);
 });
