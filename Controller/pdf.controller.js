@@ -15,7 +15,6 @@ const pythonCall = async (url) => {
     mode: "text",
     pythonPath: "python3",
     pythonOptions: ["-u"],
-    // scriptPath: `${__dirname}`,
     scriptPath: `${__dirname}`,
     args: url,
   };
