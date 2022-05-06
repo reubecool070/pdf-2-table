@@ -25,6 +25,7 @@ const pythonPromise = (url) =>{
        data1 = data.toString()
        console.log("data============", data1);
       }
+      console.log("python", data);
       console.log(typeof data);
     //  data1 =  data.toString()
    })
