@@ -11,6 +11,7 @@ app.get("/", (req, res, next) => {
 });
 // app.use("/api", apiRoutes);
 app.post("/api/pdf", async (req, res, next) => {
+  console.log("called", req.body);
   const response = await pdf2TableConverter(req.body.url);
   // const readFile = fs.readFile(`${__dirname}/output.json`, "utf-8");
   console.log(response);
