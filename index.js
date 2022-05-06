@@ -14,7 +14,7 @@ app.post("/api/pdf", async (req, res, next) => {
   console.log("called", req.body);
   const response = await pdf2TableConverter(req.body.url);
   // const readFile = fs.readFile(`${__dirname}/output.json`, "utf-8");
-  const parseFile = response ? JSON.parse(response) : [];
+  const parseFile = response.length ? JSON.parse(response) : [];
   // fs.writeFileSync("./Controller/output.json", JSON.stringify([]));
   res.status(200).json(parseFile);
 });
