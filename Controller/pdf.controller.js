@@ -1,4 +1,7 @@
-const { PythonShell } = require("python-shell");
+// const { PythonShell } = require("python-shell");
+let { spawnSync, spawn } = require("child_process");
+const path = require("path");
+
 
 const pdf2TableConverter = async (url) => {
   try {
@@ -10,29 +13,36 @@ const pdf2TableConverter = async (url) => {
   }
 };
 
-const pythonCall = async (url) => {
-  const options = {
-    mode: "text",
-    pythonPath: "python3",
-    pythonOptions: ["-u"],
-    scriptPath: `${__dirname}`,
-    // args: url,
-  };
-  try {
-    const response = await new Promise((resolve, reject) => {
-      PythonShell.run("gct.py", options, async function (err, results) {
-        if (err) {
-          reject(err);
-        }
-        resolve(JSON.parse(results, null, 4));
-      });
-    });
+const pythonPromise = (url) =>{
+ return new Promise(function(resolve, reject) {
+    let data1
+    const py = spawn("python3", [
+      path.join(__dirname, "gct.py"),
+      url,
+    ]);
+   py.stdout.on('data', function(data) {
+     data1 =  data.toString()
+   })
+   py.on('close', (code) => {
+     resolve(data1)
+     if (!data1) reject("Not found data")
+   })
+  })
+} 
 
-    return response;
-  } catch (error) {
-    console.log(error);
-    return error;
-  }
+const pythonCall = async (url) => {
+  // const options = {
+  //   mode: "text",
+  //   pythonPath: "python3",
+  //   pythonOptions: ["-u"],
+  //   scriptPath: `${__dirname}`,
+  //   // args: url,
+  // };
+  
+  
+const response = await pythonPromise(url)
+return response;
+ 
 };
 
 module.exports = {
