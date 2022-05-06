@@ -15,7 +15,7 @@ const pdf2TableConverter = async (url) => {
 
 const pythonPromise = (url) =>{
  return new Promise(function(resolve, reject) {
-    let data1
+    let data1 = []
     const py = spawn("python3", [
       path.join(__dirname, "gct.py"),
       url,
@@ -25,7 +25,7 @@ const pythonPromise = (url) =>{
    })
    py.on('close', (code) => {
      resolve(data1)
-     if (!data1) reject("Not found data")
+     if (!data1) reject([])
    })
   })
 } 
