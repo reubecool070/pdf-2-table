@@ -11,8 +11,8 @@ import json
 # uncomment if you want to pass pdf file from command line arguments
 # tables = tabula.read_pdf(sys.argv[1], pages="all")
 # new_path=os.path.dirname(__file__)
-
-url = sys.argv[1]
+url = "https://globalterminalsbayonne.com/wp-content/uploads/2021/04/Copy-of-GCT_Bayonne_Empty_Acceptance_List.pdf"
+# url = sys.argv[1]
 tables = tabula.read_pdf(url, pages="all", output_format="json", encoding="utf-8")
 
 

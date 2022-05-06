@@ -16,7 +16,7 @@ const pythonCall = async (url) => {
     pythonPath: "python3",
     pythonOptions: ["-u"],
     scriptPath: `${__dirname}`,
-    args: url,
+    // args: url,
   };
   try {
     const response = await new Promise((resolve, reject) => {
