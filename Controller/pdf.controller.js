@@ -21,7 +21,7 @@ const pythonPromise = (url) =>{
       url,
     ]);
    py.stdout.on('data', function(data) {
-     if (data) {
+     if (Object.keys(data).length > 1) {
        data1 = data.toString()
        console.log("data============", data1);
       }
