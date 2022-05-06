@@ -21,12 +21,12 @@ const pythonPromise = (url) =>{
       url,
     ]);
    py.stdout.on('data', function(data) {
+     console.log(typeof data);
      if (data) {
       data1 = data.toString()
+      console.log("data============", data1);
     }
-    console.log(typeof data1);
     //  data1 =  data.toString()
-    console.log("data============", data1);
    })
    py.on('close', (code) => {
      console.log("closed");
