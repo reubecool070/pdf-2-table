@@ -23,6 +23,7 @@ const pythonPromise = (url) =>{
    py.stdout.on('data', function(data) {
      data1 =  data.toString()
      console.log(typeof data1);
+     console.log("data============", data1);
    })
    py.on('close', (code) => {
      console.log("closed");
