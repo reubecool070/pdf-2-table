@@ -25,7 +25,7 @@ const pythonPromise = (url) => {
       //  data1 =  data.toString()
     });
     py.on("close", (code) => {
-      console.log("closed");
+      console.log("closed", new Date());
       resolve(data1);
       if (!data1) reject([]);
     });
