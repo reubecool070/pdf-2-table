@@ -1,0 +1,14 @@
+#create virtual environment
+python3 -m venv venv
+
+# if no requirements.txt
+pip freeze > requirements.txt
+
+#install all packages from requirements.txt
+pip install -r requirements.txt
+
+#then activate the virtual environment
+source venv/bin/activate
+
+#then run the script
+
