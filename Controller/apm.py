@@ -9,24 +9,53 @@ from sys import exit
 from PIL import Image, ImageFilter, ImageEnhance
 import tensorflow as tf
 import pathlib
+import string
 
 from tensorflow import keras
-# from tensorflow.keras import layers
-# from tensorflow.keras.models import Sequential
+from tensorflow.keras import layers
+from tensorflow.keras.models import Sequential
 
 # get relative path
 new_path = os.path.dirname(__file__)
-image_path = new_path + "/images/empty-10.jpg"
+image_path = new_path + "/images/empty-6.jpg"
 
+
+DEFAULT_ALPHABET = string.digits + string.ascii_lowercase
+blank_index = len(DEFAULT_ALPHABET)
 # create a dataset
 batch_size = 32
 img_height = 50
 img_width = 150
 # getting model
-# dataset_path = os.path.join(new_path, "APM_LABELS")
-# data_dir = pathlib.Path(dataset_path)
-# class_names = ["NA", "NO", "YES"]
-# model = tf.keras.models.load_model('apm_model.h5')
+dataset_path = os.path.join(new_path, "APM_LABELS")
+data_dir = pathlib.Path(dataset_path)
+class_names = ["NA", "NO", "OTHER", "YES"]
+# convert tflite model to h5 model
+
+
+def run_tflite_model(image_path, quantization):
+    input_data = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
+    input_data = cv2.resize(input_data, (200, 31))
+    input_data = input_data[np.newaxis]
+    input_data = np.expand_dims(input_data, 3)
+    input_data = input_data.astype('float32')/255
+    path = f'ocr_dr.tflite'
+    interpreter = tf.lite.Interpreter(model_path=path)
+    interpreter.allocate_tensors()
+
+    # Get input and output tensors.
+    input_details = interpreter.get_input_details()
+    output_details = interpreter.get_output_details()
+
+    input_shape = input_details[0]['shape']
+    interpreter.set_tensor(input_details[0]['index'], input_data)
+
+    interpreter.invoke()
+
+    output = interpreter.get_tensor(output_details[0]['index'])
+    return output
+
+# model = convert_tflite_to_h5('lite-model_keras-ocr_dr_2.tflite', 'lite-model.h5')
 
 
 def sort_contours(cnts, method="left-to-right"):
@@ -127,7 +156,10 @@ def box_extraction(img_for_box_extraction_path, cropped_dir_path):
             new_img = cv2.resize(new_img, (150, 40))
             cv2.imwrite(cropped_dir_path+str(idx) + '.png', new_img)
             # load image to model
-            # new_img = new_img.reshape(1, 40, 150, 3)
+            new_img = new_img.reshape(1, 40, 150, 3)
+            tflite_output = run_tflite_model(cropped_dir_path+str(idx) + '.png', 'dr')
+            final_output = "".join(DEFAULT_ALPHABET[index] for index in tflite_output[0] if index not in [blank_index, -1])
+            print(idx, final_output)
             # tensor_img = tf.keras.utils.load_img(
             #     new_img, target_size=(img_height, img_width)
             # )

@@ -26,7 +26,7 @@ print("open")
 im.show()
 
 # create a dataset
-batch_size = 32
+batch_size = 20
 img_height = 40
 img_width = 150
 
@@ -75,7 +75,7 @@ model = Sequential([
   # layers.Dense(num_classes)
   tf.keras.layers.Flatten(input_shape=(img_height, img_width,3)),
   tf.keras.layers.Dense(128, activation='relu'),
-  tf.keras.layers.Dense(3)
+  tf.keras.layers.Dense(num_classes)
 ])
 
 # compile the model
@@ -87,7 +87,7 @@ model.compile(optimizer='adam',
 model.summary()
 
 # train the model
-epochs=10
+epochs=5
 history = model.fit(
   train_ds,
   validation_data=val_ds,
