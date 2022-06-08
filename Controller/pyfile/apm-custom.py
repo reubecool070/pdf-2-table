@@ -17,7 +17,7 @@ from tensorflow.keras.models import Sequential
 
 # get relative path
 new_path = os.path.dirname(__file__)
-image_path = new_path + "/images/empty-6.jpg"
+image_path = new_path + "/images/empty-1.jpg"
 
 
 DEFAULT_ALPHABET = string.digits + string.ascii_lowercase
