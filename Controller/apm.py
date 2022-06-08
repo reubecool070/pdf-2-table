@@ -11,22 +11,22 @@ import tensorflow as tf
 import pathlib
 
 from tensorflow import keras
-from tensorflow.keras import layers
-from tensorflow.keras.models import Sequential
+# from tensorflow.keras import layers
+# from tensorflow.keras.models import Sequential
 
 # get relative path
 new_path = os.path.dirname(__file__)
-image_path = new_path + "/images/empty-6.jpg"
+image_path = new_path + "/images/empty-10.jpg"
 
 # create a dataset
 batch_size = 32
 img_height = 50
 img_width = 150
 # getting model
-dataset_path = os.path.join(new_path, "APM_LABELS")
-data_dir = pathlib.Path(dataset_path)
-class_names = ["NA", "NO", "YES"]
-model = tf.keras.models.load_model('apm_model.h5')
+# dataset_path = os.path.join(new_path, "APM_LABELS")
+# data_dir = pathlib.Path(dataset_path)
+# class_names = ["NA", "NO", "YES"]
+# model = tf.keras.models.load_model('apm_model.h5')
 
 
 def sort_contours(cnts, method="left-to-right"):
@@ -127,16 +127,16 @@ def box_extraction(img_for_box_extraction_path, cropped_dir_path):
             new_img = cv2.resize(new_img, (150, 40))
             cv2.imwrite(cropped_dir_path+str(idx) + '.png', new_img)
             # load image to model
-            new_img = new_img.reshape(1, 40, 150, 3)
+            # new_img = new_img.reshape(1, 40, 150, 3)
             # tensor_img = tf.keras.utils.load_img(
             #     new_img, target_size=(img_height, img_width)
             # )
             # img_array = tf.keras.utils.img_to_array(tensor_img)
             # img_array = tf.expand_dims(img_array, 0) # Create a batch
-            predictions = model.predict(new_img)
-            print(predictions)
-            score = tf.nn.softmax(predictions[0])
-            print(idx, class_names[np.argmax(score)],100 * np.max(score))
+            # predictions = model.predict(new_img)
+            # print(predictions)
+            # score = tf.nn.softmax(predictions[0])
+            # print(idx, class_names[np.argmax(score)],100 * np.max(score))
 
     # For Debugging
     # Enable this line to see all contours.
