@@ -1,6 +1,7 @@
 const express = require("express");
 const { pdf2TableConverter } = require("./Controller/pdf.controller");
 const fs = require("fs");
+const imagetoTextConverter = require("./Controller/text.controller");
 
 const app = express();
 app.use(express.json());
@@ -17,6 +18,17 @@ app.post("/api/pdf", async (req, res, next) => {
   const parseFile = response.length ? JSON.parse(response) : [];
   // fs.writeFileSync("./Controller/output.json", JSON.stringify([]));
   res.status(200).json(parseFile);
+});
+
+app.post("/api/imagetotext", async (req, res, next) => {
+  console.log(req.body);
+  const response = await imagetoTextConverter(req.body.url);
+
+  res.status(200).json({
+    data: response,
+    status: 200,
+    message: "success",
+  });
 });
 
 app.listen(PORT, () => {

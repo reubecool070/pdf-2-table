@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/reubecool070/pdf-2-table#readme",
   "dependencies": {
+    "axios": "^0.27.2",
     "express": "^4.18.0"
   }
 }

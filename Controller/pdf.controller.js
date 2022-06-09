@@ -4,7 +4,7 @@ const path = require("path");
 
 const pdf2TableConverter = async (url) => {
   try {
-    const tabletoJSON = await pythonCall(url);
+    const tabletoJSON = await pythonPromise(url);
 
     return tabletoJSON;
   } catch (error) {
@@ -30,19 +30,6 @@ const pythonPromise = (url) => {
       if (!data1) reject([]);
     });
   });
-};
-
-const pythonCall = async (url) => {
-  // const options = {
-  //   mode: "text",
-  //   pythonPath: "python3",
-  //   pythonOptions: ["-u"],
-  //   scriptPath: `${__dirname}`,
-  //   // args: url,
-  // };
-
-  const response = await pythonPromise(url);
-  return response;
 };
 
 module.exports = {
