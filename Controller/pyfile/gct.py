@@ -12,7 +12,7 @@ import json
 # new_path=os.path.dirname(__file__)
 
 # url = sys.argv[1]
-ulr ="https://globalterminalsbayonne.com/wp-content/uploads/2021/04/Copy-of-GCT_Bayonne_Empty_Acceptance_List.pdf"
+url ="https://globalterminalsbayonne.com/wp-content/uploads/2021/04/Copy-of-GCT_Bayonne_Empty_Acceptance_List.pdf"
 print("py", url)
 tables = tabula.read_pdf(url, pages="all", output_format="json", encoding="utf-8", stream=False, lattice=True)
 print("tables", tables)
