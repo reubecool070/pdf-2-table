@@ -1,4 +1,3 @@
-from time import clock_getres
 import tabula
 import os
 import sys
@@ -12,8 +11,11 @@ import json
 # tables = tabula.read_pdf(sys.argv[1], pages="all")
 # new_path=os.path.dirname(__file__)
 
-url = sys.argv[1]
+# url = sys.argv[1]
+ulr ="https://globalterminalsbayonne.com/wp-content/uploads/2021/04/Copy-of-GCT_Bayonne_Empty_Acceptance_List.pdf"
+print("py", url)
 tables = tabula.read_pdf(url, pages="all", output_format="json", encoding="utf-8", stream=False, lattice=True)
+print("tables", tables)
 
 
 # json_object = json.dumps(tables, indent = 4, skipkeys=True)
