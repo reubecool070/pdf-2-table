@@ -140,7 +140,7 @@ def box_extraction(img_for_box_extraction_path, cropped_dir_path):
                     cropped_dir_path+str(idx) + '.png', 'dr')
                 value['text'] = "".join(
                     DEFAULT_ALPHABET[index] for index in tflite_output[0] if index not in [blank_index, -1])
-                if 'nia' in value['text']:
+                if 'ni' in value['text']:
                     value['text'] = "NA"
             text_detection.append(value)
 
