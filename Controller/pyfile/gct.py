@@ -13,7 +13,6 @@ import json
 
 url = sys.argv[1]
 tables = tabula.read_pdf(url, pages="all", output_format="json", encoding="utf-8", stream=False, lattice=True)
-print("tables", tables)
 
 
 # json_object = json.dumps(tables, indent = 4, skipkeys=True)
