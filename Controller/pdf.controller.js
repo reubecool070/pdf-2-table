@@ -15,7 +15,6 @@ const pdf2TableConverter = async (url) => {
 const pythonPromise = (url) => {
   return new Promise(function (resolve, reject) {
     let data1 = [];
-    console.log("python called");
     const py = spawn("python3", [path.join(__dirname, "pyfile/gct.py"), url]);
     py.stdout.on("data", function (data) {
       if (Object.keys(data).length > 1) {
