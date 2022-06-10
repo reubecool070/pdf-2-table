@@ -26,7 +26,7 @@ print("open")
 im.show()
 
 # create a dataset
-batch_size = 20
+batch_size = 16
 img_height = 40
 img_width = 150
 
@@ -62,6 +62,19 @@ print(np.min(first_image), np.max(first_image))
 
 # create the model
 num_classes = len(class_names)
+
+#data augmentation
+data_augmentation = keras.Sequential(
+  [
+    layers.RandomFlip("horizontal",
+                      input_shape=(img_height,
+                                  img_width,
+                                  3)),
+    # layers.RandomRotation(0.1),
+    # layers.RandomZoom(0.1),
+  ]
+)
+
 model = Sequential([
   # layers.Rescaling(1./255, input_shape=(img_height, img_width, 3)),
   # layers.Conv2D(16, 3, padding='same', activation='relu'),
@@ -73,6 +86,8 @@ model = Sequential([
   # layers.Flatten(),
   # layers.Dense(128, activation='relu'),
   # layers.Dense(num_classes)
+  # data_augmentation,
+  # tf.keras.layers.Rescaling(1./255),
   tf.keras.layers.Flatten(input_shape=(img_height, img_width,3)),
   tf.keras.layers.Dense(128, activation='relu'),
   tf.keras.layers.Dense(num_classes)
@@ -87,7 +102,7 @@ model.compile(optimizer='adam',
 model.summary()
 
 # train the model
-epochs=5
+epochs=10
 history = model.fit(
   train_ds,
   validation_data=val_ds,
@@ -117,7 +132,7 @@ plt.legend(loc='upper right')
 plt.title('Training and Validation Loss')
 
 #save tensorflow model history
-model.save('apm_model.h5')
+model.save(relative_path+'/trainmodel/apm_model' + str(epochs) + '.h5')
 
 
 plt.show()

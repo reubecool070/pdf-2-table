@@ -30,9 +30,11 @@ const pythonPromise = async () => {
 // };
 
 const imagetoTextConverter = async (url) => {
+  let imageJSON;
   try {
-    await download_image(url, path.join("./Controller/pyfile/images/empty-1.jpg"));
-    const imageJSON = await pythonPromise();
+    await download_image(url, path.join("./Controller/pyfile/images/empty-1.jpg")).then(async () => {
+      imageJSON = await pythonPromise();
+    });
 
     if (typeof imageJSON === "string") {
       return JSON.parse(imageJSON);

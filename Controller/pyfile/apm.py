@@ -32,7 +32,7 @@ data_dir = pathlib.Path(dataset_path)
 class_names = ["NA", "NO", "OTHER", "YES"]
 text_detection = []
 
-model = tf.keras.models.load_model(new_path+'/trainmodel/apm_model.h5')
+model = tf.keras.models.load_model(new_path+'/trainmodel/apm_model10.h5')
 
 def run_tflite_model(image_path, quantization):
     input_data = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
@@ -62,11 +62,12 @@ def run_tflite_model(image_path, quantization):
 
 def box_extraction(img_for_box_extraction_path, cropped_dir_path):
     img = cv2.imread(img_for_box_extraction_path, 0)  # Read the image
-    (thresh, img_bin) = cv2.threshold(img, 30, 255,
+    (thresh, img_bin) = cv2.threshold(img, 100, 255,
                                       cv2.THRESH_BINARY | cv2.THRESH_OTSU)  # Thresholding the image
     img_bin = 255-img_bin  # Invert the image
+    cv2.imwrite(new_path+'/images/img_bin.jpg', img_bin)
 
-    # Defining a kernel length
+    # Defining a kernel length    exit()
     kernel_length = np.array(img).shape[1]//40
 
     # A verticle kernel of (1 X kernel_length), which will detect all the verticle lines from the image.
@@ -80,12 +81,12 @@ def box_extraction(img_for_box_extraction_path, cropped_dir_path):
     # Morphological operation to detect verticle lines from an image
     img_temp1 = cv2.erode(img_bin, verticle_kernel, iterations=1)
     verticle_lines_img = cv2.dilate(img_temp1, verticle_kernel, iterations=5)
-    # cv2.imwrite("images/verticle_lines.jpg", verticle_lines_img)
+    cv2.imwrite(new_path+"/images/verticle_lines.jpg", verticle_lines_img)
 
     # Morphological operation to detect horizontal lines from an image
-    img_temp2 = cv2.erode(img_bin, hori_kernel, iterations=2)
+    img_temp2 = cv2.erode(img_bin, hori_kernel, iterations=1)
     horizontal_lines_img = cv2.dilate(img_temp2, hori_kernel, iterations=2)
-    # cv2.imwrite("images/horizontal_lines.jpg", horizontal_lines_img)
+    cv2.imwrite(new_path+"/images/horizontal_lines.jpg", horizontal_lines_img)
 
     # Weighting parameters, this will decide the quantity of an image to be added to make a new image.
     alpha = 0.5
@@ -100,9 +101,14 @@ def box_extraction(img_for_box_extraction_path, cropped_dir_path):
     # Find contours for image, which will detect all the boxes
     contours, hierarchy = cv2.findContours(
         img_final_bin, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    cv2.imwrite(new_path+"/images/img_final_bin.jpg", img_final_bin)
     # Sort all the contours by top to bottom.
     # (contours, boundingBoxes) = sort_contours(contours, method="top-to-bottom")
-
+    # For Debugging
+    # Enable this line to see all contours.
+    cv2.drawContours(img, contours, -1, (0, 0, 255), 3)
+    cv2.imwrite(new_path+"/images/img_contour.jpg", img)
+  
     idx = 0
     for c in contours[::-1]:
         # Returns the location and width,height for every contour
@@ -134,7 +140,10 @@ def box_extraction(img_for_box_extraction_path, cropped_dir_path):
                     cropped_dir_path+str(idx) + '.png', 'dr')
                 value['text'] = "".join(
                     DEFAULT_ALPHABET[index] for index in tflite_output[0] if index not in [blank_index, -1])
+                if 'nia' in value['text']:
+                    value['text'] = "NA"
             text_detection.append(value)
+
 
 
 # Input image path and out folder
