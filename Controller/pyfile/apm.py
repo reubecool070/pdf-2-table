@@ -15,7 +15,7 @@ from tensorflow.keras.models import Sequential
 
 # get relative path
 new_path = os.path.dirname(__file__)
-temp_path = 'tmp'
+temp_path = '/tmp'
 image_path = temp_path + "/empty-1.jpg"
 original_img = cv2.imread(image_path)
 print(image_path, "outside")
