@@ -146,7 +146,7 @@ def box_extraction(img_for_box_extraction_path, cropped_dir_path):
 
 
 # Input image path and out folder
-box_extraction(image_path, temp_path + "/cropped-0/")
+box_extraction(image_path, new_path + "/cropped-0/")
 json_string = json.dumps(text_detection)
 print(str(json_string))
 
