@@ -2,7 +2,6 @@ import cv2
 import matplotlib.pyplot as plt
 import os
 import numpy as np
-import pytesseract
 import pandas as pd
 import json
 from sys import exit
