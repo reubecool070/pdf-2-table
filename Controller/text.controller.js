@@ -3,10 +3,10 @@ const path = require("path");
 const fs = require("fs");
 const download_image = require("../utils/downloadUrl");
 
-const pythonPromise = async () => {
+const pythonPromise = async (url) => {
   return new Promise(function (resolve, reject) {
     let data1 = [];
-    const py = spawn("python3", [path.join(__dirname, "pyfile/apm.py")]);
+    const py = spawn("python3", [path.join(__dirname, "pyfile/apm.py"), url]);
     py.stdout.on("data", function (data) {
       if (Object.keys(data).length > 1) {
         data1 = data.toString();
@@ -34,7 +34,7 @@ const imagetoTextConverter = async (url) => {
   try {
     console.log("/tmp/empty-1.jpg");
     await download_image(url, `/tmp/empty-1.jpg`).then(async () => {
-      imageJSON = await pythonPromise();
+      imageJSON = await pythonPromise(url);
     });
 
     if (typeof imageJSON === "string") {

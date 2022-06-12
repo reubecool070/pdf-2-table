@@ -1,19 +1,15 @@
-const axios = require("axios");
-const fs = require("fs");
+var http = require("https");
+var fs = require("fs");
 
-const download_image = async (url, image_path) => {
-  axios({
-    url,
-    responseType: "stream",
-  }).then(
-    (response) =>
-      new Promise((resolve, reject) => {
-        response.data
-          .pipe(fs.createWriteStream(image_path))
-          .on("finish", () => resolve())
-          .on("error", (e) => reject(e));
-      })
-  );
+var download_image = function (url, dest) {
+  var file = fs.createWriteStream(dest);
+  http.get(url, function (response) {
+    response.pipe(file);
+    file.on("finish", function () {
+      console.log("downloaded");
+      // file.close(cb);
+    });
+  });
 };
 
 module.exports = download_image;
