@@ -132,7 +132,7 @@ plt.legend(loc='upper right')
 plt.title('Training and Validation Loss')
 
 #save tensorflow model history
-model.save(relative_path+'/trainmodel/apm_model' + str(epochs) + '.h5')
+model.save(relative_path+'/trainmodel/apm_model_new' + str(epochs) + '.h5')
 
 
 plt.show()
