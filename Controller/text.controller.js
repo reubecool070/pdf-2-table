@@ -37,6 +37,7 @@ const imagetoTextConverter = async (url) => {
     imageJSON = await pythonPromise(image_url);
 
     if (typeof imageJSON === "string") {
+      console.log(typeof imageJSON, "type");
       return JSON.parse(imageJSON);
     }
     return [];
