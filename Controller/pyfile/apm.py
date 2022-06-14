@@ -16,13 +16,16 @@ from tensorflow.keras.models import Sequential
 # image_url = 'https://www.apmterminals.com/los-angeles/-/media/americas/LA/daily-information/empty-receivables-6-13.jpg'
 image_url = sys.argv[1]
 new_path = os.path.dirname(__file__)
-temp_path = new_path + '/tmp'
+temp_path = '/tmp'
 
 # returns 0 if success
+
+
 def wget(url, download_path):
     return os.system('wget -O {} {}'.format(download_path, url))
 
-wget(image_url, temp_path +'/empty-1.jpg')
+
+wget(image_url, temp_path + '/empty-1.jpg')
 
 # get relative path
 image_path = temp_path + "/empty-1.jpg"
@@ -42,6 +45,7 @@ class_names = ["NA", "NO", "OTHER", "YES"]
 text_detection = []
 
 model = tf.keras.models.load_model(new_path+'/trainmodel/apm_model_new10.h5')
+
 
 def run_tflite_model(image_path, quantization):
     input_data = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
@@ -72,7 +76,8 @@ def run_tflite_model(image_path, quantization):
 def box_extraction(img_for_box_extraction_path, cropped_dir_path):
     img = cv2.imread(img_for_box_extraction_path, 0)  # Read the image
     # enhance image with opencv
-    img = cv2.adaptiveThreshold(img, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 11, 2)
+    img = cv2.adaptiveThreshold(
+        img, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 11, 2)
     (thresh, img_bin) = cv2.threshold(img, 100, 255,
                                       cv2.THRESH_BINARY | cv2.THRESH_OTSU)  # Thresholding the image
     img_bin = 255-img_bin  # Invert the image
@@ -155,16 +160,14 @@ def box_extraction(img_for_box_extraction_path, cropped_dir_path):
             text_detection.append(value)
 
 
-
 # Input image path and out folder
 box_extraction(image_path, temp_path + "/")
 json_string = json.dumps(text_detection)
 print(str(json_string))
 
-#save list in json file
+# save list in json file
 # with open(new_path + "/text_detection.json", 'r+') as outfile:
-    # outfile.write(json.dumps(text_detection, indent=4))
-    # json.dump(text_detection, outfile, indent=4)
-    # #close file
-    # outfile.close()
-
+# outfile.write(json.dumps(text_detection, indent=4))
+# json.dump(text_detection, outfile, indent=4)
+# #close file
+# outfile.close()
