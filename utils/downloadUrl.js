@@ -1,19 +1,17 @@
 const http = require("https");
 const fs = require("fs");
 
-const download_image = function (url, dest) {
+const download_image = async (url, dest) => {
   const file = fs.createWriteStream(dest);
-  try {
-    http.get(url, function (response) {
-      response.pipe(file);
-      file.on("finish", function () {
-        console.log("downloaded");
-        // file.close(cb);
-      });
+  http.get(url, function (response) {
+    response.pipe(file);
+
+    // after download completed close filestream
+    file.on("finish", () => {
+      file.close();
+      console.log("Download Completed");
     });
-  } catch (error) {
-    console.log(error);
-  }
+  });
 };
 
 module.exports = download_image;
