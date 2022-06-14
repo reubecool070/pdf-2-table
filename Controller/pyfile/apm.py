@@ -19,9 +19,11 @@ image_url = 'https://www.apmterminals.com/los-angeles/-/media/americas/LA/daily-
 
 # returns 0 if success
 def wget(url, download_path):
+    print("downloading")
     return os.system('wget -O {} {}'.format(download_path, url))
 
-wget(image_url, 'tmp/empty-1.jpg')
+wget(image_url, '/tmp/empty-1.jpg')
+print("downloaded")
 
 # get relative path
 new_path = os.path.dirname(__file__)
