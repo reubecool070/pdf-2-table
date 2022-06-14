@@ -139,7 +139,7 @@ def box_extraction(img_for_box_extraction_path, cropped_dir_path):
             new_img = cv2.resize(new_img, (150, 40))
             cv2.imwrite(cropped_dir_path+str(idx) + '.png', new_img)
             new_img = new_img.reshape(1, 40, 150, 3)
-
+            print(idx)
             # custom model
             # load image to model
             predictions = model.predict(new_img)
