@@ -15,7 +15,6 @@ from tensorflow.keras.models import Sequential
 
 image_url = 'https://www.apmterminals.com/los-angeles/-/media/americas/LA/daily-information/empty-receivables-6-13.jpg'
 # image_url = sys.argv[1]
-print("pyrt", image_url)
 new_path = os.path.dirname(__file__)
 temp_path = '/tmp'
 
@@ -139,7 +138,6 @@ def box_extraction(img_for_box_extraction_path, cropped_dir_path):
             new_img = cv2.resize(new_img, (150, 40))
             cv2.imwrite(cropped_dir_path+str(idx) + '.png', new_img)
             new_img = new_img.reshape(1, 40, 150, 3)
-            print(idx)
             # custom model
             # load image to model
             predictions = model.predict(new_img)
@@ -158,7 +156,6 @@ def box_extraction(img_for_box_extraction_path, cropped_dir_path):
                     DEFAULT_ALPHABET[index] for index in tflite_output[0] if index not in [blank_index, -1])
                 if 'ni' in value['text']:
                     value['text'] = "NA"
-            print(value)
             text_detection.append(value)
 
 

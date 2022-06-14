@@ -11,7 +11,7 @@ const pythonPromise = async (url) => {
       }
     });
     py.on("close", (code) => {
-      console.log("closed", new Date().toLocaleString());
+      console.log("closed text detection", new Date().toLocaleString());
       resolve(data1);
       if (!data1) reject([]);
     });
