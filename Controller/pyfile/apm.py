@@ -15,15 +15,13 @@ from tensorflow.keras import layers
 from tensorflow.keras.models import Sequential
 
 
-image_url = 'https://www.apmterminals.com/los-angeles/-/media/americas/LA/daily-information/empty-receivables-6-13.jpg'
+image_url = sys.argv[1]
 
 # returns 0 if success
 def wget(url, download_path):
-    print("downloading")
     return os.system('wget -O {} {}'.format(download_path, url))
 
 wget(image_url, '/tmp/empty-1.jpg')
-print("downloaded")
 
 # get relative path
 new_path = os.path.dirname(__file__)
