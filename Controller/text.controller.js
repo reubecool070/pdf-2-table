@@ -1,7 +1,5 @@
 const { spawn } = require("child_process");
 const path = require("path");
-const fs = require("fs");
-const download_image = require("../utils/downloadUrl");
 
 const pythonPromise = async (url) => {
   return new Promise(function (resolve, reject) {
@@ -32,10 +30,11 @@ const pythonPromise = async (url) => {
 const imagetoTextConverter = async (url) => {
   let imageJSON;
   try {
-    console.log("/tmp/empty-1.jpg");
-    await download_image(url, `empty-1.jpg`).then(async () => {
-      // imageJSON = await pythonPromise(url);
-    });
+    const image_url = url.split("?")[0];
+    console.log(image_url);
+    // await download_image(url, `empty-1.jpg`).then(async () => {
+    // });
+    imageJSON = await pythonPromise(image_url);
 
     if (typeof imageJSON === "string") {
       return JSON.parse(imageJSON);

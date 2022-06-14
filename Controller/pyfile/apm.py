@@ -8,17 +8,27 @@ from PIL import Image, ImageFilter, ImageEnhance
 import tensorflow as tf
 import pathlib
 import string
+import sys
 
 from tensorflow import keras
 from tensorflow.keras import layers
 from tensorflow.keras.models import Sequential
+
+
+image_url = sys.argv[1]
+
+# returns 0 if success
+def wget(url, download_path):
+    return os.system('wget -O {} {}'.format(download_path, url))
+
+wget(image_url, 'tmp/empty-1.jpg')
 
 # get relative path
 new_path = os.path.dirname(__file__)
 temp_path = '/tmp'
 image_path = temp_path + "/empty-1.jpg"
 original_img = cv2.imread(image_path)
-print(image_path, "outside")
+
 
 DEFAULT_ALPHABET = string.digits + string.ascii_lowercase
 blank_index = len(DEFAULT_ALPHABET)
@@ -61,7 +71,6 @@ def run_tflite_model(image_path, quantization):
 
 
 def box_extraction(img_for_box_extraction_path, cropped_dir_path):
-    print(img_for_box_extraction_path, "function")
     img = cv2.imread(img_for_box_extraction_path, 0)  # Read the image
     (thresh, img_bin) = cv2.threshold(img, 100, 255,
                                       cv2.THRESH_BINARY | cv2.THRESH_OTSU)  # Thresholding the image
