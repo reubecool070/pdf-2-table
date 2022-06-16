@@ -160,7 +160,7 @@ def box_extraction(img_for_box_extraction_path, cropped_dir_path):
                 'index': idx
             }
             # lite model from tensorflow
-            if (value['text'] == "OTHER"):
+            if (value['text'] == "OTHER" and idx < 30):
                 tflite_output = run_tflite_model(
                     cropped_dir_path+str(idx) + '.png', 'dr')
                 value['text'] = "".join(
