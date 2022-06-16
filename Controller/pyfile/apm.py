@@ -13,8 +13,8 @@ from tensorflow.keras import layers
 from tensorflow.keras.models import Sequential
 
 
-# image_url = 'https://www.apmterminals.com/los-angeles/-/media/americas/LA/daily-information/empty-receivables-6-13.jpg'
-image_url = sys.argv[1]
+image_url = 'https://www.apmterminals.com/los-angeles/-/media/americas/LA/daily-information/empty-receivables-6-15pm.jpg'
+# image_url = sys.argv[1]
 new_path = os.path.dirname(__file__)
 temp_path = '/tmp'
 
@@ -25,7 +25,7 @@ def wget(url, download_path):
     return os.system('wget -O {} {}'.format(download_path, url))
 
 
-# wget(image_url, temp_path + '/empty-1.jpg')
+wget(image_url, temp_path + '/empty-1.jpg')
 
 # get relative path
 image_path = temp_path + "/empty-1.jpg"
