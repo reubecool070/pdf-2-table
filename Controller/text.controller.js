@@ -1,18 +1,19 @@
 const { spawn } = require("child_process");
 const path = require("path");
+const moment = require("moment");
+require("moment-timezone");
 
 const pythonPromise = async (url) => {
   return new Promise(function (resolve, reject) {
     let data1 = [];
     const py = spawn("python3", [path.join(__dirname, "pyfile/apm.py"), url]);
     py.stdout.on("data", function (data) {
-      console.log("ended", data);
       if (Object.keys(data).length > 1) {
         data1 = data.toString();
       }
     });
     py.on("close", (code) => {
-      console.log("closed text detection", new Date().toLocaleString());
+      console.log("closed text detection", moment.tz("Asia/Kathmandu").format());
       resolve(data1);
       if (!data1) reject([]);
     });
