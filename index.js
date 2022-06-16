@@ -24,9 +24,9 @@ app.post("/api/imagetotext", async (req, res, next) => {
   console.log(req.body);
   const response = await imagetoTextConverter(req.body.url);
 
-  res.status(200).json({
+  res.status(202).json({
     data: response,
-    status: 200,
+    status: 202,
     message: "success",
   });
 });

@@ -9,7 +9,6 @@ const pythonPromise = async (url) => {
       console.log("ended", data);
       if (Object.keys(data).length > 1) {
         data1 = data.toString();
-        console.log(data1, "python data");
       }
     });
     py.on("close", (code) => {
