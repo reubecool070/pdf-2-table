@@ -6,8 +6,10 @@ const pythonPromise = async (url) => {
     let data1 = [];
     const py = spawn("python3", [path.join(__dirname, "pyfile/apm.py"), url]);
     py.stdout.on("data", function (data) {
+      console.log("ended", data);
       if (Object.keys(data).length > 1) {
         data1 = data.toString();
+        console.log(data1, "python data");
       }
     });
     py.on("close", (code) => {
@@ -35,7 +37,7 @@ const imagetoTextConverter = async (url) => {
     // await download_image(url, `empty-1.jpg`).then(async () => {
     // });
     imageJSON = await pythonPromise(image_url);
-
+    console.log(imageJSON, "imageJSON");
     if (typeof imageJSON === "string") {
       console.log(typeof imageJSON, "type");
       return JSON.parse(imageJSON);
