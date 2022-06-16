@@ -25,7 +25,7 @@ def wget(url, download_path):
     return os.system('wget -O {} {}'.format(download_path, url))
 
 
-# wget(image_url, temp_path + '/empty-1.jpg')
+wget(image_url, temp_path + '/empty-1.jpg')
 
 # get relative path
 image_path = temp_path + "/empty-1.jpg"
