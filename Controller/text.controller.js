@@ -33,13 +33,9 @@ const imagetoTextConverter = async (url) => {
   let imageJSON;
   try {
     const image_url = url.split("?")[0];
-    console.log(image_url);
-    // await download_image(url, `empty-1.jpg`).then(async () => {
-    // });
     imageJSON = await pythonPromise(image_url);
-    console.log(imageJSON, "imageJSON");
+
     if (typeof imageJSON === "string") {
-      console.log(typeof imageJSON, "type");
       return JSON.parse(imageJSON);
     }
     return [];
