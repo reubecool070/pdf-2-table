@@ -46,13 +46,7 @@ text_detection = []
 
 model = tf.keras.models.load_model(new_path+'/trainmodel/apm_model_new10.h5')
 
-
-def run_tflite_model(image_path, quantization):
-    input_data = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
-    input_data = cv2.resize(input_data, (200, 31))
-    input_data = input_data[np.newaxis]
-    input_data = np.expand_dims(input_data, 3)
-    input_data = input_data.astype('float32')/255
+def run_model():
     path = f'/trainmodel/ocr_dr.tflite'
     interpreter = tf.lite.Interpreter(model_path=new_path+path)
     interpreter.allocate_tensors()
@@ -60,8 +54,25 @@ def run_tflite_model(image_path, quantization):
     # Get input and output tensors.
     input_details = interpreter.get_input_details()
     output_details = interpreter.get_output_details()
+    return input_details, output_details, interpreter
 
-    input_shape = input_details[0]['shape']
+input_details, output_details, interpreter = run_model()
+
+def run_tflite_model(image_path, quantization):
+    input_data = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
+    input_data = cv2.resize(input_data, (200, 31))
+    input_data = input_data[np.newaxis]
+    input_data = np.expand_dims(input_data, 3)
+    input_data = input_data.astype('float32')/255
+    # path = f'/trainmodel/ocr_dr.tflite'
+    # interpreter = tf.lite.Interpreter(model_path=new_path+path)
+    # interpreter.allocate_tensors()
+
+    # # Get input and output tensors.
+    # input_details = interpreter.get_input_details()
+    # output_details = interpreter.get_output_details()
+
+    # input_shape = input_details[0]['shape']
     interpreter.set_tensor(input_details[0]['index'], input_data)
 
     interpreter.invoke()
@@ -134,7 +145,7 @@ def box_extraction(img_for_box_extraction_path, cropped_dir_path):
         if (w > 50 and h > 10):
             idx += 1
             new_img = original_img[y:y+h, x:x+w]
-            # resize image
+                        # resize image
             new_img = cv2.resize(new_img, (150, 40))
             cv2.imwrite(cropped_dir_path+str(idx) + '.png', new_img)
             new_img = new_img.reshape(1, 40, 150, 3)
