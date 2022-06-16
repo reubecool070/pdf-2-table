@@ -149,13 +149,13 @@ def box_extraction(img_for_box_extraction_path, cropped_dir_path):
                 'index': idx
             }
             # lite model from tensorflow
-            if (value['text'] == "OTHER"):
-                tflite_output = run_tflite_model(
-                    cropped_dir_path+str(idx) + '.png', 'dr')
-                value['text'] = "".join(
-                    DEFAULT_ALPHABET[index] for index in tflite_output[0] if index not in [blank_index, -1])
-                if 'ni' in value['text']:
-                    value['text'] = "NA"
+            # if (value['text'] == "OTHER"):
+            #     tflite_output = run_tflite_model(
+            #         cropped_dir_path+str(idx) + '.png', 'dr')
+            #     value['text'] = "".join(
+            #         DEFAULT_ALPHABET[index] for index in tflite_output[0] if index not in [blank_index, -1])
+            #     if 'ni' in value['text']:
+            #         value['text'] = "NA"
             text_detection.append(value)
 
 
