@@ -102,7 +102,7 @@ model.compile(optimizer='adam',
 model.summary()
 
 # train the model
-epochs=10
+epochs=15
 history = model.fit(
   train_ds,
   validation_data=val_ds,
@@ -132,7 +132,7 @@ plt.legend(loc='upper right')
 plt.title('Training and Validation Loss')
 
 #save tensorflow model history
-model.save(relative_path+'/trainmodel/apm_model_new' + str(epochs) + '.h5')
+model.save(relative_path+'/trainmodel/apm_model_final' + str(epochs) + '.h5')
 
 
 plt.show()
