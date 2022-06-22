@@ -87,7 +87,7 @@ model = Sequential([
   # layers.Dense(128, activation='relu'),
   # layers.Dense(num_classes)
   # data_augmentation,
-  # tf.keras.layers.Rescaling(1./255),
+  # tf.keras.layers.Rescaling(1./255,input_shape=(img_height, img_width,3)),
   tf.keras.layers.Flatten(input_shape=(img_height, img_width,3)),
   tf.keras.layers.Dense(128, activation='relu'),
   tf.keras.layers.Dense(num_classes)
@@ -102,7 +102,7 @@ model.compile(optimizer='adam',
 model.summary()
 
 # train the model
-epochs=15
+epochs=12
 history = model.fit(
   train_ds,
   validation_data=val_ds,
