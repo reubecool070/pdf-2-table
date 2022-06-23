@@ -21,9 +21,9 @@ print(image_count)
 no = list(data_dir.glob('NO/*'))
 print("opening")
 
-im = PIL.Image.open(str(no[0]))
-print("open")
-im.show()
+# im = PIL.Image.open(str(no[0]))
+# print("open")
+# im.show()
 
 # create a dataset
 batch_size = 16
@@ -87,7 +87,7 @@ model = Sequential([
   # layers.Dense(128, activation='relu'),
   # layers.Dense(num_classes)
   # data_augmentation,
-  # tf.keras.layers.Rescaling(1./255),
+  # tf.keras.layers.Rescaling(1./255,input_shape=(img_height, img_width,3)),
   tf.keras.layers.Flatten(input_shape=(img_height, img_width,3)),
   tf.keras.layers.Dense(128, activation='relu'),
   tf.keras.layers.Dense(num_classes)
